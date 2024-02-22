@@ -16,8 +16,6 @@ public class UserService {
     public int register(UserRegisterDTO userRegisterDTO){
         String encodedPassword = passwordEncoder.encode(userRegisterDTO.getPassword());
         String email = userRegisterDTO.getEmail();
-        String firstName = userRegisterDTO.getFirstName();
-        String lastName = userRegisterDTO.getLastName();
         User user = new User(email,encodedPassword, "USER");
         userRepository.save(user);
         return user.getId();
