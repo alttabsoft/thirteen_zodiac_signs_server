@@ -1,11 +1,12 @@
 package com.multirkh.study_validation_mail.entity;
 
+import com.multirkh.study_validation_mail.dto.UserInfoDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
 @Entity
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
     private int id;
@@ -21,5 +22,9 @@ public class User {
 
     public User() {
 
+    }
+
+    public UserInfoDTO toUserInfoDTO() {
+        return new UserInfoDTO(email, password, role);
     }
 }
