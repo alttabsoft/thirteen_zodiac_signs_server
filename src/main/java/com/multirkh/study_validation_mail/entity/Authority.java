@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,12 +17,15 @@ import lombok.NoArgsConstructor;
         )
 })
 public class Authority {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
     @Column(name = "authority_id")
     private Long id;
 
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "authority")
+    private List<UserAuthority> userAuthorityList = new ArrayList<>();
 
     public Authority(String name) {
         this.name = name;

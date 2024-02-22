@@ -1,5 +1,6 @@
 package com.multirkh.study_validation_mail.config;
 
+import com.multirkh.study_validation_mail.entity.Authority;
 import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,9 +33,10 @@ public class AuthenticationProviderImpl implements AuthenticationProvider { // ë
         List<User> userList = userRepository.findByEmail(username);
         if (!userList.isEmpty()){
             if(passwordEncoder.matches(password, userList.get(0).getPassword())){
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(userList.get(0).getRole()));
-                return new UsernamePasswordAuthenticationToken(username, password, authorities);
+                List<SimpleGrantedAuthority> authoritySet = userList.get(0).getUserAuthorityList()
+                        .stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority().getName()))
+                        .collect(Collectors.toList());
+                return new UsernamePasswordAuthenticationToken(username, password, authoritySet);
             } else {
                 throw new BadCredentialsException("Invalid password");
             }

@@ -4,6 +4,11 @@ import com.multirkh.study_validation_mail.dto.UserInfoDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Entity
 @Table(name = "user")
@@ -14,19 +19,16 @@ public class User extends BaseTimeEntity{
     private int id;
     private String email;
     private String password;
-    private String role;
+    //private String role;
+    @OneToMany(mappedBy = "user")
+    private List<UserAuthority> userAuthorityList = new ArrayList<>();
 
-    public User(String email, String password, String role) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.role = role;
-    }
-
-    public User() {
-
     }
 
     public UserInfoDTO toUserInfoDTO() {
-        return new UserInfoDTO(email, password, role);
+        return new UserInfoDTO(email, password, userAuthorityList);
     }
 }
