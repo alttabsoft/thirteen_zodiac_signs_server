@@ -1,6 +1,6 @@
 package com.multirkh.study_validation_mail.api;
 
-import com.multirkh.study_validation_mail.dto.UserInfoDTO;
+import com.multirkh.study_validation_mail.dto.UserDto;
 import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class ApiLoginController {
     private final UserRepository userRepository;
 
     @RequestMapping("/user")
-    public UserInfoDTO getUserDetailsAfterLogin(Authentication authentication){ //authentication은 AuthenticationProviderImpl 에 있습니다~
+    public UserDto getUserDetailsAfterLogin(Authentication authentication){ //authentication은 AuthenticationProviderImpl 에 있습니다~
         List<User> userList = userRepository.findByEmail(authentication.getName());
         if(!userList.isEmpty()){
             return userList.get(0).toUserInfoDTO();

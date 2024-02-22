@@ -1,6 +1,7 @@
 package com.multirkh.study_validation_mail.entity;
 
-import com.multirkh.study_validation_mail.dto.UserInfoDTO;
+import com.multirkh.study_validation_mail.dto.AuthorityDto;
+import com.multirkh.study_validation_mail.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,8 @@ public class User extends BaseTimeEntity{
         this.password = password;
     }
 
-    public UserInfoDTO toUserInfoDTO() {
-        return new UserInfoDTO(email, password, userAuthorityList);
+    public UserDto toUserDto() {
+        List<AuthorityDto> authorityDtoList = this.userAuthorityList.stream().map(AuthorityDto::new).toList();
+        return new UserDto(email, password, authorityDtoList);
     }
 }
