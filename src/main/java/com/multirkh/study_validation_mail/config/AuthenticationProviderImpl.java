@@ -18,7 +18,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-public class AuthenticationProviderImpl implements AuthenticationProvider { // 로그인 인증에 필요한 수문장 역할
+public class AuthenticationProviderImpl implements AuthenticationProvider { // 로그인 인증에 필요한 수문장 역할 이게 있으면 UserDetailsService 가 필요 없다.
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
