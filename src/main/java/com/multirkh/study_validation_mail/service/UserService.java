@@ -76,4 +76,15 @@ public class UserService {
             log.error("error has occurred = {}", e.toString());
         }
     }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+        if (user == null || user.isVerified()) {
+            return false;
+        } else {
+            user.setVerified();
+            userRepository.save(user);
+            return true;
+        }
+    }
 }
