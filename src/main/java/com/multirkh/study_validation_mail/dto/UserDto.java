@@ -3,12 +3,14 @@ package com.multirkh.study_validation_mail.dto;
 import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.entity.UserAuthority;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class UserDto {
     private String email;
     private String password;

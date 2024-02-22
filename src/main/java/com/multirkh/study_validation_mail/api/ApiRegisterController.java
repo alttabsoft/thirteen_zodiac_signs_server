@@ -1,6 +1,6 @@
 package com.multirkh.study_validation_mail.api;
 
-import com.multirkh.study_validation_mail.dto.UserRegisterDTO;
+import com.multirkh.study_validation_mail.dto.UserDto;
 import com.multirkh.study_validation_mail.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,10 +19,10 @@ public class ApiRegisterController {
     private final UserService userService;
 
     @PostMapping("/api/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDTO userRegisterDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
         ResponseEntity<String> response = null;
         try {
-            int registeredUserId = userService.register(userRegisterDTO);
+            int registeredUserId = userService.register(userDto);
             if (registeredUserId > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)

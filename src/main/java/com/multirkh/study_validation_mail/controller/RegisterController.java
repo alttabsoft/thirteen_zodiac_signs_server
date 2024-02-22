@@ -1,6 +1,6 @@
 package com.multirkh.study_validation_mail.controller;
 
-import com.multirkh.study_validation_mail.dto.UserRegisterDTO;
+import com.multirkh.study_validation_mail.dto.UserDto;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import com.multirkh.study_validation_mail.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,13 +22,13 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) { //타임리프와 인터랙션을 위해서 필요한 변수다.
-        model.addAttribute("member", new UserRegisterDTO());
+        model.addAttribute("member", new UserDto());
         return "signup_form";
     }
 
     @PostMapping("/register")
-    public String processRegistration(UserRegisterDTO user, HttpServletRequest request){
-        userService.register(user);
+    public String processRegistration(UserDto userDto, HttpServletRequest request){
+        userService.register(userDto);
         return "register_success";
     }
 

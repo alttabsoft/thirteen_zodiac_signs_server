@@ -19,7 +19,7 @@ public class ApiLoginController {
     public UserDto getUserDetailsAfterLogin(Authentication authentication){ //authentication은 AuthenticationProviderImpl 에 있습니다~
         List<User> userList = userRepository.findByEmail(authentication.getName());
         if(!userList.isEmpty()){
-            return userList.get(0).toUserInfoDTO();
+            return userList.get(0).toUserDto();
         } else {
             return null;
         }
