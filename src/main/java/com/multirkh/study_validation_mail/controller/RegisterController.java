@@ -3,6 +3,7 @@ package com.multirkh.study_validation_mail.controller;
 import com.multirkh.study_validation_mail.dto.UserDto;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import com.multirkh.study_validation_mail.service.UserService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,8 +30,9 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(UserDto userDto, HttpServletRequest request){
-        userService.register(userDto);
+    public String processRegistration(UserDto userDto, HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
+        userService.register(userDto, getSiteURL(request));
         return "register_success";
     }
 

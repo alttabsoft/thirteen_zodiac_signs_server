@@ -25,6 +25,7 @@ public class User extends BaseTimeEntity{
     private int id;
     private String email;
     private String password;
+    private String verificationcode;
     //private String role;
     @OneToMany(mappedBy = "user")
     private List<UserAuthority> userAuthorityList = new ArrayList<>();
@@ -36,6 +37,6 @@ public class User extends BaseTimeEntity{
 
     public UserDto toUserDto() {
         List<AuthorityDto> authorityDtoList = this.userAuthorityList.stream().map(AuthorityDto::new).toList();
-        return new UserDto(email, password, authorityDtoList);
+        return new UserDto(email, password, verificationcode, authorityDtoList);
     }
 }
