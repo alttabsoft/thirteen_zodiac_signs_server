@@ -1,6 +1,5 @@
 package com.multirkh.study_validation_mail.entity;
 
-import com.multirkh.study_validation_mail.DTO.UserRegisterDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 

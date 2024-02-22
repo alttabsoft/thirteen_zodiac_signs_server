@@ -1,13 +1,12 @@
 package com.multirkh.study_validation_mail.controller;
 
-import com.multirkh.study_validation_mail.DTO.UserRegisterDTO;
+import com.multirkh.study_validation_mail.dto.UserRegisterDTO;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import com.multirkh.study_validation_mail.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

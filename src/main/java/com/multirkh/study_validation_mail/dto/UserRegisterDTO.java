@@ -1,4 +1,4 @@
-package com.multirkh.study_validation_mail.DTO;
+package com.multirkh.study_validation_mail.dto;
 
 import lombok.Getter;
 import lombok.Setter;

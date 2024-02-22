@@ -1,11 +1,9 @@
 package com.multirkh.study_validation_mail.service;
 
-import com.multirkh.study_validation_mail.DTO.UserRegisterDTO;
+import com.multirkh.study_validation_mail.dto.UserRegisterDTO;
 import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
