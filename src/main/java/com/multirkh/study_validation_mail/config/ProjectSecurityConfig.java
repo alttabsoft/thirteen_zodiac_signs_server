@@ -18,7 +18,7 @@ public class ProjectSecurityConfig {
         http.csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/register", "/", "/api/register").permitAll()
+                                .requestMatchers("/register", "/", "/api/register", "/verify").permitAll()
                                 .requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll() // css 장식용
                 )
                 .formLogin(withDefaults())

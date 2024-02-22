@@ -1,5 +1,6 @@
 package com.multirkh.study_validation_mail.repository;
 
+import com.multirkh.study_validation_mail.RandomStringGenerator;
 import com.multirkh.study_validation_mail.entity.Authority;
 import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.entity.UserAuthority;
@@ -26,7 +27,7 @@ class MemberRepositoryTest {
 
     @Test
     public void testCreateUser() {
-        User user = new User("ravikumar@example.com", passwordEncoder.encode("example"));
+        User user = new User("ravikumar@example.com", passwordEncoder.encode("example"), RandomStringGenerator.generateRandomString(64));
         User savedMember = userRepository.save(user);
         User existUser = userRepository.findByEmail(user.getEmail()).get(0);
         assertThat(savedMember.getEmail()).isEqualTo(existUser.getEmail());
@@ -34,7 +35,7 @@ class MemberRepositoryTest {
 
     @Test
     public void testCreateUser2(){
-        User user = new User("helloWorld@example.com", passwordEncoder.encode("helloWorld"));
+        User user = new User("helloWorld@example.com", passwordEncoder.encode("helloWorld"), RandomStringGenerator.generateRandomString(64));
         Authority authority = new Authority("USER");
         Authority authority2 = new Authority("ADMIN");
         Authority savedAuthority = authorityRepository.save(authority);

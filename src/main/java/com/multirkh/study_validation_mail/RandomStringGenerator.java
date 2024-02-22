@@ -4,12 +4,6 @@ import java.util.Random;
 
 public class RandomStringGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final int LENGTH = 64;
-
-    public static void main(String[] args) {
-        String randomString = generateRandomString(LENGTH);
-        System.out.println("Random String: " + randomString);
-    }
 
     public static String generateRandomString(int length) {
         Random random = new Random();

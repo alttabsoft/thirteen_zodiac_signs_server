@@ -1,5 +1,6 @@
 package com.multirkh.study_validation_mail.service;
 
+import com.multirkh.study_validation_mail.RandomStringGenerator;
 import com.multirkh.study_validation_mail.dto.UserDto;
 import com.multirkh.study_validation_mail.entity.Authority;
 import com.multirkh.study_validation_mail.entity.User;
@@ -33,14 +34,13 @@ public class UserService {
     public int register(UserDto userDto, String siteURL) {
         String encodedPassword = passwordEncoder.encode(userDto.getPassword());
         String email = userDto.getEmail();
-        User user = new User(email,encodedPassword);
-
-        User savedUser = userRepository.save(user);
+        User user = new User(email,encodedPassword, RandomStringGenerator.generateRandomString(64));
+        User savedUser = userRepository.save(user); //userRepository 에 저장
         List<Authority> authorityList = authorityRepository.findByName("USER");
         UserAuthority userAuthority = new UserAuthority(savedUser, authorityList.get(0));
         userAuthorityRepository.save(userAuthority);
 
-        sendVerificationEmail(userDto, siteURL);
+        sendVerificationEmail(user.toUserDto(), siteURL);
         return user.getId();
     }
 
@@ -51,11 +51,13 @@ public class UserService {
             String fromAddress = MailUserName;
             String senderName = CompanyName;
             String subject = "Please verify your registration";
-            String content = "Dear [[name]],<br>"
-            + "Please click the link below to verify your registration:<br>"
-            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-            + "Thank you,<br>"
-            + "Your company name.";
+            String content = "Dear [[name]],<br>" +
+                    "Please click the link below to verify your registration:<br>" +
+                    "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>" +
+                    "Thank you,<br> " +
+                    "Maybe you want to know verificationCode is" +
+                    "[[verificationCode]]" +
+                    "Your company name.";
 
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -66,8 +68,8 @@ public class UserService {
 
             content = content.replace("[[name]]", userDto.getFullName());
             String verifyURL = siteURL + "/verify?code=" + userDto.getVerificationCode();
-
             content = content.replace("[[URL]]", verifyURL);
+            //content = content.replace("[[verificationCode]]", userDto.getVerificationCode());
 
             mimeMessageHelper.setText(content, true);
 
