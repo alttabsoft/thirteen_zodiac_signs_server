@@ -28,7 +28,7 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String processRegistration(UserRegisterDTO user, HttpServletRequest request){
-        userService.register(getSiteURL(request),user);
+        userService.register(user);
         return "register_success";
     }
 

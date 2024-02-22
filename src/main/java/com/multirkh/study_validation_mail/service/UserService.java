@@ -13,12 +13,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void register(String siteURL, UserRegisterDTO userRegisterDTO){
+    public int register(UserRegisterDTO userRegisterDTO){
         String encodedPassword = passwordEncoder.encode(userRegisterDTO.getPassword());
         String email = userRegisterDTO.getEmail();
         String firstName = userRegisterDTO.getFirstName();
         String lastName = userRegisterDTO.getLastName();
         User user = new User(email,encodedPassword, firstName, lastName, "USER");
         userRepository.save(user);
+        return user.getId();
     }
 }
