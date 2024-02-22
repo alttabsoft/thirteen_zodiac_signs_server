@@ -18,7 +18,7 @@ public class UserService {
         String email = userRegisterDTO.getEmail();
         String firstName = userRegisterDTO.getFirstName();
         String lastName = userRegisterDTO.getLastName();
-        User user = new User(email,encodedPassword, firstName, lastName, "USER");
+        User user = new User(email,encodedPassword, "USER");
         userRepository.save(user);
         return user.getId();
     }

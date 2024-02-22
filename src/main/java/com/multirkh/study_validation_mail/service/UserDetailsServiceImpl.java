@@ -27,10 +27,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String firstName, lastName, role = null;
         List<GrantedAuthority> authorityList = null;
         log.info("user.getId() = {}", username);
-        User user = userRepository.findByEmail(username);
-        if (user == null) {
+        List<User> userList = userRepository.findByEmail(username);
+        if (userList.isEmpty()) {
             throw new UsernameNotFoundException("User details not found for the user: " + username);
         } else {
+            User user = userList.get(0);
             userEmail = user.getEmail();
             password = user.getPassword();
             authorityList = new ArrayList<>();

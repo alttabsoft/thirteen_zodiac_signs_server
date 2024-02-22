@@ -20,9 +20,9 @@ class MemberRepositoryTest {
 
     @Test
     public void testCreateUser() {
-        User member = new User("ravikumar@gmail.com", passwordEncoder.encode("ravi2020"), "Ravi", "Kumar", "USER");
+        User member = new User("ravikumar@gmail.com", passwordEncoder.encode("ravi2020"), "USER");
         User savedMember = memberRepository.save(member);
-        User existUser = memberRepository.findByEmail(member.getEmail());
-        assertThat(member.getEmail()).isEqualTo(existUser.getEmail());
+        User existUser = memberRepository.findByEmail(member.getEmail()).get(0);
+        assertThat(savedMember.getEmail()).isEqualTo(existUser.getEmail());
     }
 }
