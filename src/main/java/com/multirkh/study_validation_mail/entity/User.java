@@ -3,15 +3,20 @@ package com.multirkh.study_validation_mail.entity;
 import com.multirkh.study_validation_mail.dto.UserInfoDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Entity
-@Table(name = "user")
+@NoArgsConstructor
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(
+                name = "EMAIL_UNIQUE",
+                columnNames = {"email"}
+        )
+})
 public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
