@@ -5,6 +5,7 @@ import com.multirkh.study_validation_mail.repository.UserRepository;
 import com.multirkh.study_validation_mail.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 @Controller
 @RequiredArgsConstructor
 public class RegisterController {
-    Logger log = LoggerFactory.getLogger(this.getClass().getName());
+
 
     private final UserRepository memberRepository;
     private final UserService userService;
@@ -47,10 +48,11 @@ public class RegisterController {
     }
 
     private String getSiteURL(HttpServletRequest request) {
+        //Logger log = LoggerFactory.getLogger(this.getClass().getName());
         String siteURL = request.getRequestURL().toString();
         String replacedUrl = siteURL.replace(request.getServletPath(), "");
-        log.info(":: siteURL = {}", siteURL);
-        log.info(":: siteURL = {}", siteURL);
+        //log.info(":: siteURL = {}", siteURL);
+        //log.info(":: siteURL = {}", siteURL);
         return replacedUrl;
     }
 }

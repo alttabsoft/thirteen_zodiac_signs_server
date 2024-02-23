@@ -10,29 +10,41 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * 로그인 인증에 필요한 수문장 역할을한다.<br/>이게 있으면
+ * {@link org.springframework.security.core.userdetails.UserDetailsService}
+ * 가 필요 없다.
+ *
+ * @author Kihyun
+ */
 @Configuration
 @RequiredArgsConstructor
-public class AuthenticationProviderImpl implements AuthenticationProvider { // 로그인 인증에 필요한 수문장 역할 이게 있으면 UserDetailsService 가 필요 없다.
+public class AuthenticationProviderImpl implements AuthenticationProvider {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * @param authentication the authentication request object.
+     * @return org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+     * @throws BadCredentialsException;
+     */
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException { //인증 성공시 토큰 반환
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         List<User> userList = userRepository.findByEmail(username);
         if (!userList.isEmpty()){
-            if(passwordEncoder.matches(password, userList.get(0).getPassword())){
+            User user = userList.get(0);
+            if(!user.isVerified()){
+                throw new BadCredentialsException("Not verified account");
+            }
+            if(passwordEncoder.matches(password, user.getPassword())){
                 List<SimpleGrantedAuthority> authoritySet = userList.get(0).getUserAuthorityList()
                         .stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority().getName()))
                         .collect(Collectors.toList());

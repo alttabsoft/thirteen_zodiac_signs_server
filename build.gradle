@@ -36,7 +36,16 @@ dependencies {
     implementation 'org.webjars:webjars-locator-core:0.55'
     // 페이지 설정 END   //
 
+    // 롬복 추가 설정 --IntelliJ run 말고 Gradle Run으로 설정 //
     annotationProcessor 'org.projectlombok:lombok'
+    // 롬복 추가 설정 END //
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 }
 
 

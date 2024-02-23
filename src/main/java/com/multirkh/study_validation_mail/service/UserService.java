@@ -19,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import static com.multirkh.study_validation_mail.config.SecurityConstants.CompanyName;
-import static com.multirkh.study_validation_mail.config.SecurityConstants.MailUserName;
+import static com.multirkh.study_validation_mail.config.SecurityConstants.COMPANY_NAME;
+import static com.multirkh.study_validation_mail.config.SecurityConstants.MAIL_USER_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -48,8 +48,8 @@ public class UserService {
         Logger log = LoggerFactory.getLogger(this.getClass().getName());
         try {
             String toAddress = userDto.getEmail();
-            String fromAddress = MailUserName;
-            String senderName = CompanyName;
+            String fromAddress = MAIL_USER_NAME;
+            String senderName = COMPANY_NAME;
             String subject = "Please verify your registration";
             String content = "Dear [[name]],<br>" +
                     "Please click the link below to verify your registration:<br>" +

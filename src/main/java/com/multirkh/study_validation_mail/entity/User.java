@@ -19,8 +19,8 @@ import java.util.List;
                 columnNames = {"email"}
         ),
         @UniqueConstraint(
-                name = "VERIFICATIONCODE_UNIQUE",
-                columnNames = {"verficationCode"}
+                name = "VERIFICATION_UNIQUE",
+                columnNames = {"verification_code"}
         )
 })
 public class User extends BaseTimeEntity{
@@ -30,6 +30,7 @@ public class User extends BaseTimeEntity{
     private int id;
     private String email;
     private String password;
+    @Column(name = "verification_code")
     private String verficationCode;
     @Getter
     private boolean verified = false;
