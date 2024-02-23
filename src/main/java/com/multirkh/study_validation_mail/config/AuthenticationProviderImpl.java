@@ -2,7 +2,9 @@ package com.multirkh.study_validation_mail.config;
 
 import com.multirkh.study_validation_mail.entity.Authority;
 import com.multirkh.study_validation_mail.entity.User;
+import com.multirkh.study_validation_mail.entity.UserAuthority;
 import com.multirkh.study_validation_mail.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  */
 @Configuration
 @RequiredArgsConstructor
+@Transactional
 public class AuthenticationProviderImpl implements AuthenticationProvider {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -45,9 +48,13 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
                 throw new BadCredentialsException("Not verified account");
             }
             if(passwordEncoder.matches(password, user.getPassword())){
-                List<SimpleGrantedAuthority> authoritySet = userList.get(0).getUserAuthorityList()
+                List<UserAuthority> userAuthorityList = userList.get(0).getUserAuthorityList();
+                for(UserAuthority userAuthority : userAuthorityList){
+                    System.out.println("userAuthority.getAuthority().getName() = " + userAuthority.getAuthority().getName());
+                }
+                List<SimpleGrantedAuthority> authoritySet = userAuthorityList
                         .stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority().getName()))
-                        .collect(Collectors.toList());
+                        .toList();
                 return new UsernamePasswordAuthenticationToken(username, password, authoritySet);
             } else {
                 throw new BadCredentialsException("Invalid password");
