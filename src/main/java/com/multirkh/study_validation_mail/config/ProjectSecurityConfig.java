@@ -43,14 +43,16 @@ public class ProjectSecurityConfig {
                 ///// CSRF 토큰 영역
                 // 이 친구는 수상쩍은 링크로부터 해커가 보낸 요청을 원래 믿을만한 브라우저에서 온 요청인지를 구분하기 위해 사용하는 토큰이다.
                 .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
-                        .ignoringRequestMatchers("/register", "/", "/api/register", "/verify") //이 친구들은 CSRF에 대한 보호를 할 필요가 없으므로(민감한 정보를 수정하는 URL이 아니므로) 무시한다.
+                        .ignoringRequestMatchers("/register","/register_success", "/",  "/verify") //이 친구들은 CSRF에 대한 보호를 할 필요가 없으므로(민감한 정보를 수정하는 URL이 아니므로) 무시한다.
+                        .ignoringRequestMatchers("/api/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 ///// 커스텀 필터 추가
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class) //CSRF 토큰 필터를 정의하고, 해당 필터가 BasicAuthenticationFilter(여기서 로그인 인증이 동작 후 , CSRF 토큰이 생성됨) 클래스 다음에 위치 하도록 설정
                 ///// 인증 후 권한 확인 영역
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/register", "/", "/api/register", "/verify").permitAll()
+                                .requestMatchers("/register","/register_success", "/",  "/verify").permitAll()
+                                .requestMatchers("/api/register").permitAll()
                                 .requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll() // css 장식용
                 )
                 .formLogin(withDefaults())
