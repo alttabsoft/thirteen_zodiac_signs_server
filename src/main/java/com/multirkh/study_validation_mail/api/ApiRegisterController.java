@@ -32,7 +32,8 @@ public class ApiRegisterController {
         } catch (Exception ex) {
             response = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An exception occurred due to " + ex.getMessage());
+                    .body("An exception occurred due to ");
+                            //+ ex.getMessage()); //배포에선 반드시 주석 처리할 것
         }
         return response;
     }
