@@ -4,12 +4,13 @@ import com.multirkh.study_validation_mail.entity.User;
 import com.multirkh.study_validation_mail.entity.UserAuthority;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class UserDto {
     private String email;

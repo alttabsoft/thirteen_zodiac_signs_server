@@ -27,7 +27,7 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) { //타임리프와 인터랙션을 위해서 필요한 변수다.
-        model.addAttribute("member", new UserDto());
+        model.addAttribute("user", new UserDto());
         return "signup_form";
     }
 
