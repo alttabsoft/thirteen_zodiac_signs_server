@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.multirkh.study_validation_mail.config.SecurityConstants.COMPANY_NAME;
-import static com.multirkh.study_validation_mail.config.SecurityConstants.JWT_KEY;
+import static com.multirkh.study_validation_mail.config.SecurityConstants.JWT_PRIVATE_KEY;
 
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -45,8 +45,8 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
-            log.info("/////////  JwtKey = {} ////////////", JWT_KEY);
-            SecretKey key = Keys.hmacShaKeyFor(JWT_KEY.getBytes(StandardCharsets.UTF_8));
+            log.info("/////////  JwtKey = {} ////////////", JWT_PRIVATE_KEY);
+            SecretKey key = Keys.hmacShaKeyFor(JWT_PRIVATE_KEY.getBytes(StandardCharsets.UTF_8));
             String jwt = Jwts.builder()
                     .issuer(COMPANY_NAME)
                     .subject("JWT Token")

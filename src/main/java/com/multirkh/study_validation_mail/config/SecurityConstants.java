@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class SecurityConstants {
     public static String MAIL_USER_NAME;
     public static String COMPANY_NAME;
-    public static String JWT_KEY;
+    public static String JWT_PRIVATE_KEY;
     public static String JWT_HEADER;
 
     @Value("${MAIL_USERNAME}")
@@ -22,7 +22,7 @@ public class SecurityConstants {
 
     @Value("${JWT_KEY}")
     private void setJwtKey(String value){
-        JWT_KEY = value;
+        JWT_PRIVATE_KEY = value;
     }
 
     @Value("${JWT_HEADER}")
