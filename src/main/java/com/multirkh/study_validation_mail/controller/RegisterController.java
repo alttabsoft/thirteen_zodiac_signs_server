@@ -34,6 +34,7 @@ public class RegisterController {
     @PostMapping("/register")
     public String processRegistration(UserDto userDto, HttpServletRequest request)
             throws MessagingException, UnsupportedEncodingException {
+        System.out.println("userDto.getEmail() = " + userDto.getEmail());
         userService.register(userDto, getSiteURL(request));
         return "register_success";
     }

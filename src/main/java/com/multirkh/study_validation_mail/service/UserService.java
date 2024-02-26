@@ -40,7 +40,7 @@ public class UserService {
         UserAuthority userAuthority = new UserAuthority(savedUser, authorityList.get(0));
         userAuthorityRepository.save(userAuthority);
 
-        sendVerificationEmail(user.toUserDto(), siteURL);
+        //sendVerificationEmail(user.toUserDto(), siteURL); // 메일 보내는 기능 잠시 종료
         return user.getId();
     }
 
