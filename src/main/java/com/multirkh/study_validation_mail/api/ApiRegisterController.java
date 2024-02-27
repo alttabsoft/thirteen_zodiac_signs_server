@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ApiRegisterController {
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
-
     private final UserService userService;
 
     @PostMapping("/register")

@@ -16,28 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class RegisterController {
-
-
-    private final UserRepository memberRepository;
     private final UserService userService;
-
-
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) { //타임리프와 인터랙션을 위해서 필요한 변수다.
-        model.addAttribute("user", new UserDto());
-        return "signup_form";
-    }
-
-    @PostMapping("/register")
-    public String processRegistration(UserDto userDto, HttpServletRequest request)
-            throws MessagingException, UnsupportedEncodingException {
-        System.out.println("userDto.getEmail() = " + userDto.getEmail());
-        userService.register(userDto, getSiteURL(request));
-        return "register_success";
-    }
 
     @GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
@@ -46,14 +28,5 @@ public class RegisterController {
         } else {
             return "verify_fail";
         }
-    }
-
-    private String getSiteURL(HttpServletRequest request) {
-        //Logger log = LoggerFactory.getLogger(this.getClass().getName());
-        String siteURL = request.getRequestURL().toString();
-        String replacedUrl = siteURL.replace(request.getServletPath(), "");
-        //log.info(":: siteURL = {}", siteURL);
-        //log.info(":: siteURL = {}", siteURL);
-        return replacedUrl;
     }
 }
