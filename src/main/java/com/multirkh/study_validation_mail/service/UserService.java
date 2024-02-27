@@ -10,6 +10,7 @@ import com.multirkh.study_validation_mail.repository.UserAuthorityRepository;
 import com.multirkh.study_validation_mail.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import static com.multirkh.study_validation_mail.config.SecurityConstants.MAIL_U
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,6 +34,19 @@ public class UserService {
     private final JavaMailSender javaMailSender;
 
     public int register(UserDto userDto, String siteURL) {
+        User user = preRegister(userDto);
+
+        sendVerificationEmail(user.toUserDto(), siteURL); // 메일 보내는 기능 잠시 종료
+        return user.getId();
+    }
+
+    public int testRegister(UserDto userDto, String siteURL) {
+        User savedUser = preRegister(userDto);
+        savedUser.setVerified();
+        return savedUser.getId();
+    }
+
+    private User preRegister(UserDto userDto) {
         String encodedPassword = passwordEncoder.encode(userDto.getPassword());
         String email = userDto.getEmail();
         User user = new User(email,encodedPassword, RandomStringGenerator.generateRandomString(64));
@@ -39,9 +54,7 @@ public class UserService {
         List<Authority> authorityList = authorityRepository.findByName("USER");
         UserAuthority userAuthority = new UserAuthority(savedUser, authorityList.get(0));
         userAuthorityRepository.save(userAuthority);
-
-        //sendVerificationEmail(user.toUserDto(), siteURL); // 메일 보내는 기능 잠시 종료
-        return user.getId();
+        return user;
     }
 
     private void sendVerificationEmail(UserDto userDto, String siteURL) {

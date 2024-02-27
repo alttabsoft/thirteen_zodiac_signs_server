@@ -22,7 +22,7 @@ public class ApiRegisterController {
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         ResponseEntity<String> response = null;
         try {
-            int registeredUserId = userService.register(userDto, getSiteURL(request));
+            int registeredUserId = userService.testRegister(userDto, getSiteURL(request));
             if (registeredUserId > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)
