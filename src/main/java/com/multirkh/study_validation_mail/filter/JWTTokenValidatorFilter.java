@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 import static com.multirkh.study_validation_mail.config.SecurityConstants.JWT_HEADER;
 import static com.multirkh.study_validation_mail.config.SecurityConstants.JWT_PRIVATE_KEY;
@@ -32,7 +33,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
      * Jwts.parser() : 클레임 객체를 생성한다. 일련의 과정을 거친다. parser을 호출한뒤 <br/>
      * verifyWith(key) : 해당 빌더가 시크릿 키를 이용해 빌드할 것을 알린다
      * build() : 그리고 빌드
-     * parseSignedClaims(jwt) :  전송이 완료된 jwt 토큰을 읽을 거라고 말한다
+     * parseSignedClaims(jwt) :  전송이 완료된 jwt 토큰을 읽을 거라고 말한다. 여기서 만료일을 지났는지 아닌지를 확인함
      * getPayload() : 페이로드에 들어있는 데이터를 읽고 이에 대한 변수를 claims 에 저장한다.
      * claims.get("username")) : 해당 claims 에서 username 파트를 저장
      * claims.get("authorities") :  해당 claims 에서 authorities 파트를 저장
