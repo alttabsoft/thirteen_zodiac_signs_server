@@ -19,7 +19,7 @@ public class ApiRegisterController {
 
     private final UserService userService;
 
-    @PostMapping("/api/register")
+    @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         ResponseEntity<String> response = null;
         try {

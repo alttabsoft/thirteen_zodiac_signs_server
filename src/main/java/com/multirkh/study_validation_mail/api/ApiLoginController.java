@@ -14,8 +14,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ApiLoginController {
-    @GetMapping("/myAccount")
+    @GetMapping("/account")
     public String getAccounDetails(){
         return "Here are the account details from the DB";
+    }
+
+    @RequestMapping("/user")
+    public String getUser(){
+        return "gooood";
     }
 }

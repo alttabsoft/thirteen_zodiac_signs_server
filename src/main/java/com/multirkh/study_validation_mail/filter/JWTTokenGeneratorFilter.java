@@ -22,8 +22,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.multirkh.study_validation_mail.config.SecurityConstants.COMPANY_NAME;
-import static com.multirkh.study_validation_mail.config.SecurityConstants.JWT_PRIVATE_KEY;
+import static com.multirkh.study_validation_mail.config.SecurityConstants.*;
 
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -56,7 +55,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                     .expiration(new Date((new Date()).getTime() + 30000000))
                     .signWith(key)
                     .compact();
-            response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            response.setHeader(JWT_HEADER, jwt);
         }
 
         filterChain.doFilter(request, response);
