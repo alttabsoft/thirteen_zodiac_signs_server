@@ -1,6 +1,5 @@
 package com.multirkh.study_validation_mail.entity;
 
-import com.multirkh.study_validation_mail.RandomStringGenerator;
 import com.multirkh.study_validation_mail.dto.AuthorityDto;
 import com.multirkh.study_validation_mail.dto.UserDto;
 import jakarta.persistence.*;
@@ -37,6 +36,9 @@ public class User extends BaseTimeEntity{
     //private String role;
     @OneToMany(mappedBy = "user")
     private List<UserAuthority> userAuthorityList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private RefreshToken refreshToken;
 
     public User(String email, String password, String verficationCode) {
         this.email = email;
