@@ -1,18 +1,17 @@
 package com.multirkh.study_validation_mail.config;
 
 import com.multirkh.study_validation_mail.filter.*;
+import com.multirkh.study_validation_mail.handler.SpaCsrfTokenRequestHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.csrf.*;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
@@ -36,12 +35,18 @@ public class ProjectSecurityConfig {
                     config.setMaxAge(3600L); // 이러한 설정은 한 시간동안 기억해두었다가 캐시로 전환 보통 프로덕션에서는 24, 7일, 30일로 설정함
                     return config;
                 }))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+                )
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+        //.csrf(AbstractHttpConfigurer::disable)
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)         // 기본 인증 필터 다음, 해당 인증에 대한 결과물을 토큰 형태로 유지해야하기 때문에 이 메소드를 추가하는 것
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)        // 기본 인증 필터 이전에 실행되어야 함, 해당 JWTTokenValidatorFilter 가 정상적으로 동작했다면 Secur
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/user", "/account", "/upload").authenticated()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/csrf").permitAll()
                 )
                 //.formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
@@ -54,3 +59,4 @@ public class ProjectSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

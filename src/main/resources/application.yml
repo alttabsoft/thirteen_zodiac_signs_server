@@ -32,4 +32,4 @@ spring:
             required: true
 logging:
   level:
-    org.springframework.security: TRACE
+    org.springframework.security: DEBUG
