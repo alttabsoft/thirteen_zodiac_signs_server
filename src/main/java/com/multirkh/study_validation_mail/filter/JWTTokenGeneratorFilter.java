@@ -44,7 +44,6 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
-            log.info("/////////  JwtKey = {} ////////////", JWT_PRIVATE_KEY);
             SecretKey key = Keys.hmacShaKeyFor(JWT_PRIVATE_KEY.getBytes(StandardCharsets.UTF_8));
             String jwt = Jwts.builder()
                     .issuer(COMPANY_NAME)
