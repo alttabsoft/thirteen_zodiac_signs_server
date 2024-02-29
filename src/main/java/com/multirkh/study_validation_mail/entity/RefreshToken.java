@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "refresh_token")
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
     @Column(name ="token")

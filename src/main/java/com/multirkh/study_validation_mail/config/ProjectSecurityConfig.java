@@ -38,6 +38,7 @@ public class ProjectSecurityConfig {
                 }))
                 //.csrf(AbstractHttpConfigurer::disable)
                 .csrf((csrf) -> csrf
+                        .ignoringRequestMatchers("/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 )

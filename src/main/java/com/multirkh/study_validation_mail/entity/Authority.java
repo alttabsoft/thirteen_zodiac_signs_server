@@ -17,7 +17,8 @@ import java.util.List;
         )
 })
 public class Authority {
-    @Id @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "authority_id")
     private Long id;
 

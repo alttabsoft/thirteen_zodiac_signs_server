@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 })
 public class UserAuthority {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "user_authority_id")
     private Long id;
 

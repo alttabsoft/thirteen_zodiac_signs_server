@@ -22,7 +22,7 @@ public class ApiRegisterController {
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) {
         ResponseEntity<String> response = null;
         try {
-            int registeredUserId = userService.testRegister(userDto, getSiteURL(request));
+            int registeredUserId = userService.register(userDto, getSiteURL(request));
             if (registeredUserId > 0) {
                 response = ResponseEntity
                         .status(HttpStatus.CREATED)
@@ -31,8 +31,9 @@ public class ApiRegisterController {
         } catch (Exception ex) {
             response = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An exception occurred due to ");
-                            //+ ex.getMessage()); //배포에선 반드시 주석 처리할 것
+                    .body("An exception occurred due to " + ex.getMessage());
+            //+ ex.getMessage()); //배포에선 반드시 주석 처리할 것
+            log.error(ex.getMessage());
         }
         return response;
     }
