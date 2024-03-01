@@ -9,6 +9,7 @@ public class SecurityConstants {
     public static String COMPANY_NAME;
     public static String JWT_PRIVATE_KEY;
     public static String JWT_HEADER;
+    public static String SAVE_DIRECTORY;
 
     @Value("${MAIL_USERNAME}")
     private void setMailUserName(String value) {
@@ -28,6 +29,11 @@ public class SecurityConstants {
     @Value("${JWT_HEADER}")
     private void setJwtHeader(String value){
         JWT_HEADER = value;
+    }
+
+    @Value("${SAVE_DIRECTORY}")
+    private void setSaveDirectoryY(String value){
+        SAVE_DIRECTORY = value;
     }
 
 
