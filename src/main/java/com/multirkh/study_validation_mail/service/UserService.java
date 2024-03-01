@@ -20,8 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import static com.multirkh.study_validation_mail.config.SecurityConstants.COMPANY_NAME;
-import static com.multirkh.study_validation_mail.config.SecurityConstants.MAIL_USER_NAME;
+import static com.multirkh.study_validation_mail.config.SecurityConstants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +79,7 @@ public class UserService {
             mimeMessageHelper.setSubject(subject);
 
             content = content.replace("[[name]]", userDto.getFullName());
-            String verifyURL = siteURL + "/verify?code=" + userDto.getVerificationCode();
+            String verifyURL = FRONT_WEB_URL + "/verify?code=" + userDto.getVerificationCode();
             content = content.replace("[[URL]]", verifyURL);
             //content = content.replace("[[verificationCode]]", userDto.getVerificationCode());
 

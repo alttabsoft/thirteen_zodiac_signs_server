@@ -10,6 +10,7 @@ public class SecurityConstants {
     public static String JWT_PRIVATE_KEY;
     public static String JWT_HEADER;
     public static String SAVE_DIRECTORY;
+    public static String FRONT_WEB_URL;
 
     @Value("${MAIL_USERNAME}")
     private void setMailUserName(String value) {
@@ -36,5 +37,9 @@ public class SecurityConstants {
         SAVE_DIRECTORY = value;
     }
 
+    @Value("${FRONT_WEB_URL}")
+    private void setFrontWebUrl(String value) {
+        FRONT_WEB_URL = value;
+    }
 
 }

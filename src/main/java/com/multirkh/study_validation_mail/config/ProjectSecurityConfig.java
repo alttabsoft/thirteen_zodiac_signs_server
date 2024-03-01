@@ -38,7 +38,7 @@ public class ProjectSecurityConfig {
                 }))
                 //.csrf(AbstractHttpConfigurer::disable)
                 .csrf((csrf) -> csrf
-                        .ignoringRequestMatchers("/register")
+                        .ignoringRequestMatchers("/register","/verify")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 )
@@ -48,7 +48,7 @@ public class ProjectSecurityConfig {
                 //.addFilterBefore(new RefreshTokenValidatorFilter(),JWTTokenValidatorFilter.class)     // jwt 토큰 만료시, refresh 토큰 수행
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/user", "/account", "/upload").authenticated()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/register","/verify").permitAll()
                         .requestMatchers("/csrf").permitAll()
                 )
                 //.formLogin(Customizer.withDefaults())
