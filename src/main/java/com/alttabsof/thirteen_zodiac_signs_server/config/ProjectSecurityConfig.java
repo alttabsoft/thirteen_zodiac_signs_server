@@ -1,6 +1,7 @@
 package com.alttabsof.thirteen_zodiac_signs_server.config;
 
 import com.alttabsof.thirteen_zodiac_signs_server.filter.CsrfCookieFilter;
+import com.alttabsof.thirteen_zodiac_signs_server.filter.CustomLoggingFilter;
 import com.alttabsof.thirteen_zodiac_signs_server.filter.JWTTokenGeneratorFilter;
 import com.alttabsof.thirteen_zodiac_signs_server.filter.JWTTokenValidatorFilter;
 import com.alttabsof.thirteen_zodiac_signs_server.handler.SpaCsrfTokenRequestHandler;
@@ -43,6 +44,7 @@ public class ProjectSecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 )
+                .addFilterBefore(new CustomLoggingFilter(),BasicAuthenticationFilter.class)
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)         // 기본 인증 필터 다음, 해당 인증에 대한 결과물을 토큰 형태로 유지해야하기 때문에 이 메소드를 추가하는 것
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)        // 기본 인증 필터 이전에 실행되어야 함, 해당 JWTTokenValidatorFilter 가 정상적으로 동작했다면 Secur
