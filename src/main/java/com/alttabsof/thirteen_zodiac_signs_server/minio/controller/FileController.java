@@ -1,12 +1,10 @@
 package com.alttabsof.thirteen_zodiac_signs_server.minio.controller;
 
-import com.alttabsof.thirteen_zodiac_signs_server.minio.HttpConstants;
 import com.alttabsof.thirteen_zodiac_signs_server.minio.Range;
-import com.alttabsof.thirteen_zodiac_signs_server.minio.service.DefaultVideoService;
-import com.alttabsof.thirteen_zodiac_signs_server.minio.service.VideoService;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.data.ChunkWithMetadata;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-import static com.alttabsof.thirteen_zodiac_signs_server.minio.config.MinioConstants.DEFAULT_CHUNK_SIZE;
 import static org.springframework.http.HttpHeaders.*;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/video")
-public class VideoController {
+@RequestMapping("/file")
+public class FileController {
 
-    private final VideoService videoService;
+    private final FileService fileService;
 
     @PostMapping
     public ResponseEntity<UUID> save(@RequestParam("file") MultipartFile file) {
-        UUID fileUuid = videoService.save(file);
+        UUID fileUuid = fileService.save(file);
         return ResponseEntity.ok(fileUuid);
     }
 
@@ -38,7 +35,7 @@ public class VideoController {
             @PathVariable UUID uuid
     ) {
         Range parsedRange = Range.parseHttpRangeString(range);
-        DefaultVideoService.ChunkWithMetadata chunkWithMetadata = videoService.fetchChunk(uuid, parsedRange);
+        ChunkWithMetadata chunkWithMetadata = fileService.fetchChunk(uuid, parsedRange);
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
                 .header(CONTENT_TYPE, chunkWithMetadata.metadata().getHttpContentType())
                 .header(ACCEPT_RANGES, "bytes")

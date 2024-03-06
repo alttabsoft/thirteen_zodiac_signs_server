@@ -3,9 +3,9 @@ package com.alttabsof.thirteen_zodiac_signs_server.minio.service;
 import com.alttabsof.thirteen_zodiac_signs_server.minio.MinioStorageService;
 import com.alttabsof.thirteen_zodiac_signs_server.minio.Range;
 import com.alttabsof.thirteen_zodiac_signs_server.minio.StorageException;
-import com.alttabsof.thirteen_zodiac_signs_server.minio.entity.FileMetadataEntity;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.data.ChunkWithMetadata;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.entity.FileMetaData;
 import com.alttabsof.thirteen_zodiac_signs_server.minio.repository.FileMetadataRepository;
-import com.alttabsof.thirteen_zodiac_signs_server.minio.service.VideoService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +18,9 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DefaultVideoService implements VideoService {
+public class DefaultFileService implements FileService {
 
     private final MinioStorageService storageService;
-
     private final FileMetadataRepository fileMetadataRepository;
 
     @Override
@@ -29,24 +28,14 @@ public class DefaultVideoService implements VideoService {
     public UUID save(MultipartFile video) {
         try {
             UUID fileUuid = UUID.randomUUID();
-            FileMetadataEntity metadata = FileMetadataEntity.builder()
-                    .id(fileUuid.toString())
-                    .size(video.getSize())
-                    .httpContentType(video.getContentType())
-                    .build();
-            fileMetadataRepository.save(metadata);
+            FileMetaData fileMetaData = new FileMetaData(fileUuid.toString(), video.getSize(), video.getContentType());
+            fileMetadataRepository.save(fileMetaData);
             storageService.save(video, fileUuid);
             return fileUuid;
         } catch (Exception ex) {
             log.error("Exception occurred when trying to save the file", ex);
             throw new StorageException(ex);
         }
-    }
-
-    @Override
-    public ChunkWithMetadata fetchChunk(UUID uuid, Range range) {
-        FileMetadataEntity fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow(); // 메타 데이터 탐색
-        return new ChunkWithMetadata(fileMetadata, readChunk(uuid, range, fileMetadata.getSize()));
     }
 
     private byte[] readChunk(UUID uuid, Range range, long fileSize) {
@@ -62,8 +51,9 @@ public class DefaultVideoService implements VideoService {
         }
     }
 
-    public record ChunkWithMetadata(
-            FileMetadataEntity metadata,
-            byte[] chunk
-    ) {}
+    @Override
+    public ChunkWithMetadata fetchChunk(UUID uuid, Range range) {
+        FileMetaData fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow(); // 메타 데이터 탐색
+        return new ChunkWithMetadata(fileMetadata, readChunk(uuid, range, fileMetadata.getSize()));
+    }
 }

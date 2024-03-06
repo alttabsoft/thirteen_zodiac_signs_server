@@ -5,12 +5,9 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter
-@Setter
 @Entity
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class FileMetadataEntity {
+public class FileMetaData {
 
     @Id
     private String id;
@@ -18,4 +15,10 @@ public class FileMetadataEntity {
     private long size;
 
     private String httpContentType;
+
+    public FileMetaData(String id, long size, String httpContentType){
+        this.id = id;
+        this.size = size;
+        this.httpContentType = httpContentType;
+    }
 }
