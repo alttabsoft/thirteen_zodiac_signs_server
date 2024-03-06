@@ -5,5 +5,5 @@ import com.alttabsof.thirteen_zodiac_signs_server.minio.entity.FileMetaData;
 
 public record ChunkWithMetadata(
         FileMetaData metadata,
-        byte[] chunk
+        byte[] binaryData
 ) {}

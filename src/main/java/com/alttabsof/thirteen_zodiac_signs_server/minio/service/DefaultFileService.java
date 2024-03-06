@@ -38,6 +38,12 @@ public class DefaultFileService implements FileService {
         }
     }
 
+    /**
+     * @param uuid : 해당 파일의 UUID
+     * @param range : 해당 파일 청크의 길이
+     * @param fileSize : 파일 크기
+     * @return storageService 를 이용해 값을 해당 UUID의 일부분을 불러오고, 해당 파일을 Bytes로 읽어 return 합니다.
+     */
     private byte[] readChunk(UUID uuid, Range range, long fileSize) {
         // 파일 사이즈, range를 토대로
         long startPosition = range.getRangeStart();

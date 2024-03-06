@@ -35,7 +35,13 @@ public class MinioStorageService {
         );
     }
 
-    // 정보 가져오기
+    /**
+     * @param uuid : 파일의 UUID
+     * @param offset : 전체 파일 중 중간이든 어디든 시작 위치
+     * @param length : 전송하는 파일 크기
+     * @return :
+     * @throws Exception
+     */
     public InputStream getInputStream(UUID uuid, long offset, long length) throws Exception {
         return minioClient.getObject(
                 GetObjectArgs
