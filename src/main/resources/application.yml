@@ -26,6 +26,21 @@ spring:
           starttls:
             enable: true
             required: true
+  servlet:
+    multipart:
+      max-file-size: 10000MB
+      max-request-size: 10000MB
+
 logging:
   level:
     org.springframework.security: TRACE
+
+photon:
+  streaming:
+    default-chunk-size: 3145728 #value in bytes
+
+minio: #when changing these three connection properties below, don't forget first to change properties in docker-compose file in {project-root}/docker/docker-compose.yaml
+  url: http://localhost:9000
+  username: minioadmin
+  password: minioadmin
+  put-object-part-size: 5242880 #value in bytes (minimum is 5 MB equivalent)

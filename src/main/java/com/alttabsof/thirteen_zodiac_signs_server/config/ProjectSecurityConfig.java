@@ -50,6 +50,7 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)        // 기본 인증 필터 이전에 실행되어야 함, 해당 JWTTokenValidatorFilter 가 정상적으로 동작했다면 Secur
                 //.addFilterBefore(new RefreshTokenValidatorFilter(),JWTTokenValidatorFilter.class)     // jwt 토큰 만료시, refresh 토큰 수행
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/video").authenticated()
                         .requestMatchers("/user", "/account", "/upload").authenticated()
                         .requestMatchers("/register","/verify").permitAll()
                         .requestMatchers("/csrf").permitAll()
