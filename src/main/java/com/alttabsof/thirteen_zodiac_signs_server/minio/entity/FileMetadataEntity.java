@@ -1,4 +1,4 @@
-package com.alttabsof.thirteen_zodiac_signs_server.minio;
+package com.alttabsof.thirteen_zodiac_signs_server.minio.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

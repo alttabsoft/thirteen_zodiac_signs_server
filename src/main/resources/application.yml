@@ -35,12 +35,10 @@ logging:
   level:
     org.springframework.security: TRACE
 
-photon:
-  streaming:
-    default-chunk-size: 3145728 #value in bytes
-
 minio: #when changing these three connection properties below, don't forget first to change properties in docker-compose file in {project-root}/docker/docker-compose.yaml
   url: ${MINIO_URL}
   username: ${MINIO_USERNAME}
   password: ${MINIO_PASSWORD}
-  put-object-part-size: 5242880 #value in bytes (minimum is 5 MB equivalent)
+  common-bucket-name: ${MINIO_COMMON_BUCKET_NAME}
+  object-part-size: ${MINIO_OBJECT_PART_SIZE} #value in bytes (minimum is 5 MB equivalent)
+  default-chunk-size: ${MINIO_DEFAULT_CHUNK_SIZE}

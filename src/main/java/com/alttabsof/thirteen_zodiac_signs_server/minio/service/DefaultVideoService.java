@@ -1,5 +1,11 @@
-package com.alttabsof.thirteen_zodiac_signs_server.minio;
+package com.alttabsof.thirteen_zodiac_signs_server.minio.service;
 
+import com.alttabsof.thirteen_zodiac_signs_server.minio.MinioStorageService;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.Range;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.StorageException;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.entity.FileMetadataEntity;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.repository.FileMetadataRepository;
+import com.alttabsof.thirteen_zodiac_signs_server.minio.service.VideoService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +45,12 @@ public class DefaultVideoService implements VideoService {
 
     @Override
     public ChunkWithMetadata fetchChunk(UUID uuid, Range range) {
-        FileMetadataEntity fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow();
+        FileMetadataEntity fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow(); // 메타 데이터 탐색
         return new ChunkWithMetadata(fileMetadata, readChunk(uuid, range, fileMetadata.getSize()));
     }
 
     private byte[] readChunk(UUID uuid, Range range, long fileSize) {
+        // 파일 사이즈, range를 토대로
         long startPosition = range.getRangeStart();
         long endPosition = range.getRangeEnd(fileSize);
         int chunkSize = (int) (endPosition - startPosition + 1);

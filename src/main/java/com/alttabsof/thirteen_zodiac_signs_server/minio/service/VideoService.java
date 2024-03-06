@@ -1,5 +1,6 @@
-package com.alttabsof.thirteen_zodiac_signs_server.minio;
+package com.alttabsof.thirteen_zodiac_signs_server.minio.service;
 
+import com.alttabsof.thirteen_zodiac_signs_server.minio.Range;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
