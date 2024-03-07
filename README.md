@@ -28,6 +28,13 @@ SAVE_DIRECTORY: 클라이언트로부터 받을 파일 경로
 FRONT_WEB_URL: JAVAScript 웹페이지
 
 COMPANY_NAME : 회사명
+
+MINIO_URL: MINIO가 작동중인 PC의 URL
+MINIO_USERNAME: MINIO 접속에 필요한 계정명
+MINIO_PASSWORD: MINIO 접속에 필요한 비밀번호
+MINIO_COMMON_BUCKET_NAME: 파일 저장되는 Bucket명
+MINIO_OBJECT_PART_SIZE: MINIO 에 업로드할 때 분할 업로드 되는 크기 (byte)
+MINIO_DEFAULT_CHUNK_SIZE: MINIO 에서 다운로드할 때 분할 다운로드 되는 크기 (byte)
 ```
 
 ## 예시
@@ -52,4 +59,11 @@ SAVE_DIRECTORY: C:/somewhere/to/save/directory/
 FRONT_WEB_URL: http:/localhost:5173
 
 COMPANY_NAME : company name
+
+MINIO_URL: http://localhost:9000
+MINIO_USERNAME: miniousername
+MINIO_PASSWORD: miniopassword
+MINIO_COMMON_BUCKET_NAME: miniobucket
+MINIO_OBJECT_PART_SIZE: 1000000 (byte)
+MINIO_DEFAULT_CHUNK_SIZE: 1000000 (byte)
 ```
