@@ -38,7 +38,7 @@ public class ApiSaveController {
 
     @GetMapping("/upload")
     public String saveFile() {
-        return "dhdhdhdhdhhdhdhd";
+        return "Get Request Success";
     }
 
 
