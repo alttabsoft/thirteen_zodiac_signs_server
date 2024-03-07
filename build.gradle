@@ -38,6 +38,10 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+    // https://mvnrepository.com/artifact/io.minio/minio
+    implementation 'io.minio:minio:8.5.9'
+
 }
 
 
